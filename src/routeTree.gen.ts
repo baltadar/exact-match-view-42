@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MentorsIndexRouteImport } from './routes/mentors.index'
+import { Route as MentorsMentorIdRouteImport } from './routes/mentors.$mentorId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const MentorsIndexRoute = MentorsIndexRouteImport.update({
   path: '/mentors/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentorsMentorIdRoute = MentorsMentorIdRouteImport.update({
+  id: '/mentors/$mentorId',
+  path: '/mentors/$mentorId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors': typeof MentorsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/mentors/'
+  fullPaths: '/' | '/mentors/$mentorId' | '/mentors/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/mentors'
-  id: '__root__' | '/' | '/mentors/'
+  to: '/' | '/mentors/$mentorId' | '/mentors'
+  id: '__root__' | '/' | '/mentors/$mentorId' | '/mentors/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MentorsMentorIdRoute: typeof MentorsMentorIdRoute
   MentorsIndexRoute: typeof MentorsIndexRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentorsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mentors/$mentorId': {
+      id: '/mentors/$mentorId'
+      path: '/mentors/$mentorId'
+      fullPath: '/mentors/$mentorId'
+      preLoaderRoute: typeof MentorsMentorIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MentorsMentorIdRoute: MentorsMentorIdRoute,
   MentorsIndexRoute: MentorsIndexRoute,
 }
 export const routeTree = rootRouteImport
