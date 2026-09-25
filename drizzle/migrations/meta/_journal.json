@@ -8,6 +8,13 @@
       "when": 1790322368817,
       "tag": "0000_yaa_mentorship_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790322411552,
+      "tag": "0001_avatar_storage_policies",
+      "breakpoints": true
     }
   ]
 }
