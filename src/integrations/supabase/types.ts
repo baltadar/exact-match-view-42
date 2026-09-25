@@ -14,16 +14,357 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      match_requests: {
+        Row: {
+          created_at: string
+          id: string
+          mentee_id: string
+          mentor_id: string
+          message: string
+          proposed_duration: Database["public"]["Enums"]["duration_type"]
+          status: Database["public"]["Enums"]["request_status"]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mentee_id: string
+          mentor_id: string
+          message?: string
+          proposed_duration: Database["public"]["Enums"]["duration_type"]
+          status?: Database["public"]["Enums"]["request_status"]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mentee_id?: string
+          mentor_id?: string
+          message?: string
+          proposed_duration?: Database["public"]["Enums"]["duration_type"]
+          status?: Database["public"]["Enums"]["request_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_requests_mentee_id_fkey"
+            columns: ["mentee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_requests_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matches: {
+        Row: {
+          created_at: string
+          duration: Database["public"]["Enums"]["duration_type"]
+          end_date: string
+          ended_at: string | null
+          id: string
+          mentee_id: string
+          mentor_id: string
+          request_id: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["match_status"]
+        }
+        Insert: {
+          created_at?: string
+          duration: Database["public"]["Enums"]["duration_type"]
+          end_date: string
+          ended_at?: string | null
+          id?: string
+          mentee_id: string
+          mentor_id: string
+          request_id?: string | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["match_status"]
+        }
+        Update: {
+          created_at?: string
+          duration?: Database["public"]["Enums"]["duration_type"]
+          end_date?: string
+          ended_at?: string | null
+          id?: string
+          mentee_id?: string
+          mentor_id?: string
+          request_id?: string | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["match_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matches_mentee_id_fkey"
+            columns: ["mentee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "match_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentor_details: {
+        Row: {
+          bio: string
+          created_at: string
+          expertise: string[]
+          headline: string
+          is_published: boolean
+          pricing: Database["public"]["Enums"]["pricing_type"]
+          rate_description: string | null
+          user_id: string
+        }
+        Insert: {
+          bio?: string
+          created_at?: string
+          expertise?: string[]
+          headline?: string
+          is_published?: boolean
+          pricing?: Database["public"]["Enums"]["pricing_type"]
+          rate_description?: string | null
+          user_id: string
+        }
+        Update: {
+          bio?: string
+          created_at?: string
+          expertise?: string[]
+          headline?: string
+          is_published?: boolean
+          pricing?: Database["public"]["Enums"]["pricing_type"]
+          rate_description?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_details_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          match_id: string
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          match_id: string
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          match_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          id: string
+          match_id: string
+          mentee_id: string
+          reference: string
+          status: Database["public"]["Enums"]["payment_status"]
+        }
+        Insert: {
+          amount_cents?: number
+          created_at?: string
+          id?: string
+          match_id: string
+          mentee_id: string
+          reference: string
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          id?: string
+          match_id?: string
+          mentee_id?: string
+          reference?: string
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_mentee_id_fkey"
+            columns: ["mentee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          is_mentee: boolean
+          is_mentor: boolean
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id: string
+          is_mentee?: boolean
+          is_mentor?: boolean
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          is_mentee?: boolean
+          is_mentor?: boolean
+        }
+        Relationships: []
+      }
+      ratings: {
+        Row: {
+          created_at: string
+          id: string
+          match_id: string
+          mentee_id: string
+          mentor_id: string
+          review: string | null
+          stars: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          match_id: string
+          mentee_id: string
+          mentor_id: string
+          review?: string | null
+          stars: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          match_id?: string
+          mentee_id?: string
+          mentor_id?: string
+          review?: string | null
+          stars?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ratings_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: true
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ratings_mentee_id_fkey"
+            columns: ["mentee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ratings_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
+      duration_type: "weekly" | "monthly" | "six_months" | "yearly"
+      match_status: "pending_payment" | "active" | "completed" | "ended_early"
+      payment_status: "pending" | "paid" | "failed"
+      pricing_type: "pro_bono" | "paid"
+      request_status: "pending" | "accepted" | "declined" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +491,13 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+      duration_type: ["weekly", "monthly", "six_months", "yearly"],
+      match_status: ["pending_payment", "active", "completed", "ended_early"],
+      payment_status: ["pending", "paid", "failed"],
+      pricing_type: ["pro_bono", "paid"],
+      request_status: ["pending", "accepted", "declined", "cancelled"],
+    },
   },
 } as const
