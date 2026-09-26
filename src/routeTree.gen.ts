@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedMentorProfileRouteImport } from './routes/_authenticated/mentor-profile'
 import { Route as MentorsIndexRouteImport } from './routes/mentors.index'
 import { Route as MentorsMentorIdRouteImport } from './routes/mentors.$mentorId'
 
@@ -35,6 +36,12 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMentorProfileRoute =
+  AuthenticatedMentorProfileRouteImport.update({
+    id: '/mentor-profile',
+    path: '/mentor-profile',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const MentorsIndexRoute = MentorsIndexRouteImport.update({
   id: '/mentors/',
   path: '/mentors/',
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
 }
@@ -57,6 +65,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors': typeof MentorsIndexRoute
 }
@@ -66,20 +75,34 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/account' | '/mentors/$mentorId' | '/mentors/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/account'
+    | '/mentor-profile'
+    | '/mentors/$mentorId'
+    | '/mentors/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/account' | '/mentors/$mentorId' | '/mentors'
+  to:
+    | '/'
+    | '/auth'
+    | '/account'
+    | '/mentor-profile'
+    | '/mentors/$mentorId'
+    | '/mentors'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/account'
+    | '/_authenticated/mentor-profile'
     | '/mentors/$mentorId'
     | '/mentors/'
   fileRoutesById: FileRoutesById
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/mentor-profile': {
+      id: '/_authenticated/mentor-profile'
+      path: '/mentor-profile'
+      fullPath: '/mentor-profile'
+      preLoaderRoute: typeof AuthenticatedMentorProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/mentors/': {
       id: '/mentors/'
       path: '/mentors'
@@ -141,10 +171,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedMentorProfileRoute: typeof AuthenticatedMentorProfileRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedMentorProfileRoute: AuthenticatedMentorProfileRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
