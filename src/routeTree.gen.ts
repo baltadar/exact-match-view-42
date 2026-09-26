@@ -16,6 +16,7 @@ import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedMentorProfileRouteImport } from './routes/_authenticated/mentor-profile'
 import { Route as MentorsIndexRouteImport } from './routes/mentors.index'
 import { Route as MentorsMentorIdRouteImport } from './routes/mentors.$mentorId'
+import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack-webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,12 @@ const MentorsMentorIdRoute = MentorsMentorIdRouteImport.update({
   path: '/mentors/$mentorId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPaystackWebhookRoute =
+  ApiPublicPaystackWebhookRouteImport.update({
+    id: '/api/public/paystack-webhook',
+    path: '/api/public/paystack-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -60,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
+  '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -68,6 +76,7 @@ export interface FileRoutesByTo {
   '/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors': typeof MentorsIndexRoute
+  '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -78,6 +87,7 @@ export interface FileRoutesById {
   '/_authenticated/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
+  '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/mentor-profile'
     | '/mentors/$mentorId'
     | '/mentors/'
+    | '/api/public/paystack-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/mentor-profile'
     | '/mentors/$mentorId'
     | '/mentors'
+    | '/api/public/paystack-webhook'
   id:
     | '__root__'
     | '/'
@@ -105,6 +117,7 @@ export interface FileRouteTypes {
     | '/_authenticated/mentor-profile'
     | '/mentors/$mentorId'
     | '/mentors/'
+    | '/api/public/paystack-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -113,6 +126,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   MentorsMentorIdRoute: typeof MentorsMentorIdRoute
   MentorsIndexRoute: typeof MentorsIndexRoute
+  ApiPublicPaystackWebhookRoute: typeof ApiPublicPaystackWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -166,6 +180,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentorsMentorIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/paystack-webhook': {
+      id: '/api/public/paystack-webhook'
+      path: '/api/public/paystack-webhook'
+      fullPath: '/api/public/paystack-webhook'
+      preLoaderRoute: typeof ApiPublicPaystackWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -188,6 +209,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   MentorsMentorIdRoute: MentorsMentorIdRoute,
   MentorsIndexRoute: MentorsIndexRoute,
+  ApiPublicPaystackWebhookRoute: ApiPublicPaystackWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
