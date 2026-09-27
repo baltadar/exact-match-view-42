@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedMentorProfileRouteImport } from './routes/_authenticated/mentor-profile'
+import { Route as AuthenticatedMentorshipsRouteImport } from './routes/_authenticated/mentorships'
 import { Route as MentorsIndexRouteImport } from './routes/mentors.index'
 import { Route as MentorsMentorIdRouteImport } from './routes/mentors.$mentorId'
 import { Route as AuthenticatedPaymentReturnRouteImport } from './routes/_authenticated/payment.return'
@@ -44,6 +45,12 @@ const AuthenticatedMentorProfileRoute =
     path: '/mentor-profile',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMentorshipsRoute =
+  AuthenticatedMentorshipsRouteImport.update({
+    id: '/mentorships',
+    path: '/mentorships',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const MentorsIndexRoute = MentorsIndexRouteImport.update({
   id: '/mentors/',
   path: '/mentors/',
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
   '/mentor-profile': typeof AuthenticatedMentorProfileRoute
+  '/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
   '/payment/return': typeof AuthenticatedPaymentReturnRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
   '/mentor-profile': typeof AuthenticatedMentorProfileRoute
+  '/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors': typeof MentorsIndexRoute
   '/payment/return': typeof AuthenticatedPaymentReturnRoute
@@ -94,6 +103,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/mentor-profile': typeof AuthenticatedMentorProfileRoute
+  '/_authenticated/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
   '/_authenticated/payment/return': typeof AuthenticatedPaymentReturnRoute
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/account'
     | '/mentor-profile'
+    | '/mentorships'
     | '/mentors/$mentorId'
     | '/mentors/'
     | '/payment/return'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/account'
     | '/mentor-profile'
+    | '/mentorships'
     | '/mentors/$mentorId'
     | '/mentors'
     | '/payment/return'
@@ -127,6 +139,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/account'
     | '/_authenticated/mentor-profile'
+    | '/_authenticated/mentorships'
     | '/mentors/$mentorId'
     | '/mentors/'
     | '/_authenticated/payment/return'
@@ -179,6 +192,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMentorProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/mentorships': {
+      id: '/_authenticated/mentorships'
+      path: '/mentorships'
+      fullPath: '/mentorships'
+      preLoaderRoute: typeof AuthenticatedMentorshipsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/mentors/': {
       id: '/mentors/'
       path: '/mentors'
@@ -213,12 +233,14 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedMentorProfileRoute: typeof AuthenticatedMentorProfileRoute
+  AuthenticatedMentorshipsRoute: typeof AuthenticatedMentorshipsRoute
   AuthenticatedPaymentReturnRoute: typeof AuthenticatedPaymentReturnRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedMentorProfileRoute: AuthenticatedMentorProfileRoute,
+  AuthenticatedMentorshipsRoute: AuthenticatedMentorshipsRoute,
   AuthenticatedPaymentReturnRoute: AuthenticatedPaymentReturnRoute,
 }
 
