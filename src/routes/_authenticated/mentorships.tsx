@@ -404,7 +404,7 @@ function RateDialog({
           <DialogTitle>Rate your mentor</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
-          <StarRating value={stars} onChange={setStars} size="lg" />
+          <StarRating value={stars} onChange={setStars} size={26} />
           <Textarea
             rows={5}
             value={review}
