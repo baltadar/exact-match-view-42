@@ -13,9 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedMentorProfileRouteImport } from './routes/_authenticated/mentor-profile'
+import { Route as AuthenticatedMentorshipsRouteImport } from './routes/_authenticated/mentorships'
 import { Route as MentorsIndexRouteImport } from './routes/mentors.index'
 import { Route as MentorsMentorIdRouteImport } from './routes/mentors.$mentorId'
+import { Route as AuthenticatedChatMatchIdRouteImport } from './routes/_authenticated/chat.$matchId'
 import { Route as AuthenticatedPaymentReturnRouteImport } from './routes/_authenticated/payment.return'
 import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack-webhook'
 
@@ -38,10 +41,21 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMentorProfileRoute =
   AuthenticatedMentorProfileRouteImport.update({
     id: '/mentor-profile',
     path: '/mentor-profile',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMentorshipsRoute =
+  AuthenticatedMentorshipsRouteImport.update({
+    id: '/mentorships',
+    path: '/mentorships',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const MentorsIndexRoute = MentorsIndexRouteImport.update({
@@ -54,6 +68,12 @@ const MentorsMentorIdRoute = MentorsMentorIdRouteImport.update({
   path: '/mentors/$mentorId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedChatMatchIdRoute =
+  AuthenticatedChatMatchIdRouteImport.update({
+    id: '/chat/$matchId',
+    path: '/chat/$matchId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPaymentReturnRoute =
   AuthenticatedPaymentReturnRouteImport.update({
     id: '/payment/return',
@@ -71,9 +91,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/mentor-profile': typeof AuthenticatedMentorProfileRoute
+  '/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
+  '/chat/$matchId': typeof AuthenticatedChatMatchIdRoute
   '/payment/return': typeof AuthenticatedPaymentReturnRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
@@ -81,9 +104,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/mentor-profile': typeof AuthenticatedMentorProfileRoute
+  '/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors': typeof MentorsIndexRoute
+  '/chat/$matchId': typeof AuthenticatedChatMatchIdRoute
   '/payment/return': typeof AuthenticatedPaymentReturnRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
@@ -93,9 +119,12 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/mentor-profile': typeof AuthenticatedMentorProfileRoute
+  '/_authenticated/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
+  '/_authenticated/chat/$matchId': typeof AuthenticatedChatMatchIdRoute
   '/_authenticated/payment/return': typeof AuthenticatedPaymentReturnRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
@@ -105,9 +134,12 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/account'
+    | '/admin'
     | '/mentor-profile'
+    | '/mentorships'
     | '/mentors/$mentorId'
     | '/mentors/'
+    | '/chat/$matchId'
     | '/payment/return'
     | '/api/public/paystack-webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -115,9 +147,12 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/account'
+    | '/admin'
     | '/mentor-profile'
+    | '/mentorships'
     | '/mentors/$mentorId'
     | '/mentors'
+    | '/chat/$matchId'
     | '/payment/return'
     | '/api/public/paystack-webhook'
   id:
@@ -126,9 +161,12 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/account'
+    | '/_authenticated/admin'
     | '/_authenticated/mentor-profile'
+    | '/_authenticated/mentorships'
     | '/mentors/$mentorId'
     | '/mentors/'
+    | '/_authenticated/chat/$matchId'
     | '/_authenticated/payment/return'
     | '/api/public/paystack-webhook'
   fileRoutesById: FileRoutesById
@@ -172,11 +210,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/mentor-profile': {
       id: '/_authenticated/mentor-profile'
       path: '/mentor-profile'
       fullPath: '/mentor-profile'
       preLoaderRoute: typeof AuthenticatedMentorProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mentorships': {
+      id: '/_authenticated/mentorships'
+      path: '/mentorships'
+      fullPath: '/mentorships'
+      preLoaderRoute: typeof AuthenticatedMentorshipsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/mentors/': {
@@ -192,6 +244,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/mentors/$mentorId'
       preLoaderRoute: typeof MentorsMentorIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/chat/$matchId': {
+      id: '/_authenticated/chat/$matchId'
+      path: '/chat/$matchId'
+      fullPath: '/chat/$matchId'
+      preLoaderRoute: typeof AuthenticatedChatMatchIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/payment/return': {
       id: '/_authenticated/payment/return'
@@ -212,13 +271,19 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedMentorProfileRoute: typeof AuthenticatedMentorProfileRoute
+  AuthenticatedMentorshipsRoute: typeof AuthenticatedMentorshipsRoute
+  AuthenticatedChatMatchIdRoute: typeof AuthenticatedChatMatchIdRoute
   AuthenticatedPaymentReturnRoute: typeof AuthenticatedPaymentReturnRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedMentorProfileRoute: AuthenticatedMentorProfileRoute,
+  AuthenticatedMentorshipsRoute: AuthenticatedMentorshipsRoute,
+  AuthenticatedChatMatchIdRoute: AuthenticatedChatMatchIdRoute,
   AuthenticatedPaymentReturnRoute: AuthenticatedPaymentReturnRoute,
 }
 

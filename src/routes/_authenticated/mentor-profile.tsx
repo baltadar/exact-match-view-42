@@ -88,7 +88,7 @@ function MentorOnboarding() {
     const { error } = await supabase.storage.from("avatars").upload(path, file, { upsert: true });
     if (error) {
       setUploading(false);
-      return toast.error(error.message);
+      { toast.error(error.message); return; }
     }
     await supabase.from("profiles").update({ avatar_url: path }).eq("id", user.id);
     await refreshProfile();
@@ -99,7 +99,7 @@ function MentorOnboarding() {
   async function save(e: React.FormEvent) {
     e.preventDefault();
     if (!user) return;
-    if (tags.length === 0) return toast.error("Add at least one expertise tag.");
+    if (tags.length === 0) { toast.error("Add at least one expertise tag."); return; }
     setBusy(true);
     const payload = {
       user_id: user.id,
@@ -116,7 +116,7 @@ function MentorOnboarding() {
       await refreshProfile();
     }
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Mentor profile saved.");
   }
 

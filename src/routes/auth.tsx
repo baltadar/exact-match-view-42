@@ -49,13 +49,13 @@ function AuthPage() {
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     navigate({ to: "/mentorships" });
   }
 
   async function signUp(e: React.FormEvent) {
     e.preventDefault();
-    if (!asMentor && !asMentee) return toast.error("Choose at least one role.");
+    if (!asMentor && !asMentee) { toast.error("Choose at least one role."); return; }
     setBusy(true);
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -67,7 +67,7 @@ function AuthPage() {
     });
     if (error) {
       setBusy(false);
-      return toast.error(error.message);
+      { toast.error(error.message); return; }
     }
     if (data.session) {
       await supabase
@@ -87,7 +87,7 @@ function AuthPage() {
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin,
     });
-    if (result.error) return toast.error("Google sign-in failed. Please try again.");
+    if (result.error) { toast.error("Google sign-in failed. Please try again."); return; }
     if (result.redirected) return;
     navigate({ to: "/mentorships" });
   }
