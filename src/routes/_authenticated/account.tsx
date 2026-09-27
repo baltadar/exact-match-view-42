@@ -37,14 +37,14 @@ function AccountPage() {
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (!isMentor && !isMentee) return toast.error("Choose at least one role.");
+    if (!isMentor && !isMentee) { toast.error("Choose at least one role."); return; }
     setBusy(true);
     const { error } = await supabase
       .from("profiles")
       .update({ full_name: fullName, is_mentor: isMentor, is_mentee: isMentee })
       .eq("id", user!.id);
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await refreshProfile();
     toast.success("Account updated.");
   }

@@ -386,7 +386,7 @@ function RateDialog({
       review: review.trim() || null,
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setOpen(false);
     toast.success("Thanks for the review.");
     onDone();

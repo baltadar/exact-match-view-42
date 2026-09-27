@@ -102,7 +102,7 @@ function ChatPage() {
       .from("messages")
       .insert({ match_id: matchId, sender_id: user!.id, body: draft.trim() });
     setSending(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setDraft("");
   }
 
