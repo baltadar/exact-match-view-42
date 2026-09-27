@@ -17,6 +17,7 @@ import { Route as AuthenticatedMentorProfileRouteImport } from './routes/_authen
 import { Route as AuthenticatedMentorshipsRouteImport } from './routes/_authenticated/mentorships'
 import { Route as MentorsIndexRouteImport } from './routes/mentors.index'
 import { Route as MentorsMentorIdRouteImport } from './routes/mentors.$mentorId'
+import { Route as AuthenticatedChatMatchIdRouteImport } from './routes/_authenticated/chat.$matchId'
 import { Route as AuthenticatedPaymentReturnRouteImport } from './routes/_authenticated/payment.return'
 import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack-webhook'
 
@@ -61,6 +62,12 @@ const MentorsMentorIdRoute = MentorsMentorIdRouteImport.update({
   path: '/mentors/$mentorId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedChatMatchIdRoute =
+  AuthenticatedChatMatchIdRouteImport.update({
+    id: '/chat/$matchId',
+    path: '/chat/$matchId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPaymentReturnRoute =
   AuthenticatedPaymentReturnRouteImport.update({
     id: '/payment/return',
@@ -82,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
+  '/chat/$matchId': typeof AuthenticatedChatMatchIdRoute
   '/payment/return': typeof AuthenticatedPaymentReturnRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
@@ -93,6 +101,7 @@ export interface FileRoutesByTo {
   '/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors': typeof MentorsIndexRoute
+  '/chat/$matchId': typeof AuthenticatedChatMatchIdRoute
   '/payment/return': typeof AuthenticatedPaymentReturnRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
@@ -106,6 +115,7 @@ export interface FileRoutesById {
   '/_authenticated/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
   '/mentors/': typeof MentorsIndexRoute
+  '/_authenticated/chat/$matchId': typeof AuthenticatedChatMatchIdRoute
   '/_authenticated/payment/return': typeof AuthenticatedPaymentReturnRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/mentorships'
     | '/mentors/$mentorId'
     | '/mentors/'
+    | '/chat/$matchId'
     | '/payment/return'
     | '/api/public/paystack-webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/mentorships'
     | '/mentors/$mentorId'
     | '/mentors'
+    | '/chat/$matchId'
     | '/payment/return'
     | '/api/public/paystack-webhook'
   id:
@@ -142,6 +154,7 @@ export interface FileRouteTypes {
     | '/_authenticated/mentorships'
     | '/mentors/$mentorId'
     | '/mentors/'
+    | '/_authenticated/chat/$matchId'
     | '/_authenticated/payment/return'
     | '/api/public/paystack-webhook'
   fileRoutesById: FileRoutesById
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentorsMentorIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/chat/$matchId': {
+      id: '/_authenticated/chat/$matchId'
+      path: '/chat/$matchId'
+      fullPath: '/chat/$matchId'
+      preLoaderRoute: typeof AuthenticatedChatMatchIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/payment/return': {
       id: '/_authenticated/payment/return'
       path: '/payment/return'
@@ -234,6 +254,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedMentorProfileRoute: typeof AuthenticatedMentorProfileRoute
   AuthenticatedMentorshipsRoute: typeof AuthenticatedMentorshipsRoute
+  AuthenticatedChatMatchIdRoute: typeof AuthenticatedChatMatchIdRoute
   AuthenticatedPaymentReturnRoute: typeof AuthenticatedPaymentReturnRoute
 }
 
@@ -241,6 +262,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedMentorProfileRoute: AuthenticatedMentorProfileRoute,
   AuthenticatedMentorshipsRoute: AuthenticatedMentorshipsRoute,
+  AuthenticatedChatMatchIdRoute: AuthenticatedChatMatchIdRoute,
   AuthenticatedPaymentReturnRoute: AuthenticatedPaymentReturnRoute,
 }
 
