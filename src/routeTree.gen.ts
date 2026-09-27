@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedMentorProfileRouteImport } from './routes/_authenticated/mentor-profile'
 import { Route as AuthenticatedMentorshipsRouteImport } from './routes/_authenticated/mentorships'
 import { Route as MentorsIndexRouteImport } from './routes/mentors.index'
@@ -38,6 +39,11 @@ const AuthRoute = AuthRouteImport.update({
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMentorProfileRoute =
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/mentor-profile': typeof AuthenticatedMentorProfileRoute
   '/_authenticated/mentorships': typeof AuthenticatedMentorshipsRoute
   '/mentors/$mentorId': typeof MentorsMentorIdRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/account'
+    | '/admin'
     | '/mentor-profile'
     | '/mentorships'
     | '/mentors/$mentorId'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/account'
+    | '/admin'
     | '/mentor-profile'
     | '/mentorships'
     | '/mentors/$mentorId'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/account'
+    | '/_authenticated/admin'
     | '/_authenticated/mentor-profile'
     | '/_authenticated/mentorships'
     | '/mentors/$mentorId'
@@ -196,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/mentor-profile': {
@@ -252,6 +271,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedMentorProfileRoute: typeof AuthenticatedMentorProfileRoute
   AuthenticatedMentorshipsRoute: typeof AuthenticatedMentorshipsRoute
   AuthenticatedChatMatchIdRoute: typeof AuthenticatedChatMatchIdRoute
@@ -260,6 +280,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedMentorProfileRoute: AuthenticatedMentorProfileRoute,
   AuthenticatedMentorshipsRoute: AuthenticatedMentorshipsRoute,
   AuthenticatedChatMatchIdRoute: AuthenticatedChatMatchIdRoute,
