@@ -76,18 +76,18 @@ function Home() {
               </Button>
             </div>
           </div>
-          <div className="relative grid h-[390px] grid-cols-5 grid-rows-5 gap-3 md:h-[470px]">
+          <div className="relative h-[390px] md:h-[470px]">
             <img
               src={classroomPhoto.url}
               alt="A mentor supporting a young student in class"
-              className="col-span-4 row-span-4 h-full w-full rounded-md object-cover"
+              className="absolute bottom-0 right-0 h-[72%] w-[88%] rounded-md object-cover md:h-[74%] md:w-[82%]"
             />
             <img
               src={studentsPhoto.url}
               alt="Two students smiling together"
-              className="col-span-3 col-start-3 row-span-2 row-start-4 h-full w-full rounded-md border-4 border-card object-cover"
+              className="absolute right-0 top-0 h-[24%] w-[52%] rounded-md border-4 border-card object-cover md:w-[48%]"
             />
-            <div className="col-span-2 row-span-2 row-start-1 flex items-end bg-primary p-4 text-primary-foreground sm:p-5">
+            <div className="absolute left-0 top-[12%] z-10 flex min-h-32 w-40 items-end bg-primary p-5 text-primary-foreground md:w-44">
               <p className="font-display text-lg font-semibold leading-snug">Guidance for the work that matters.</p>
             </div>
           </div>
