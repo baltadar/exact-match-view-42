@@ -5,4 +5,4 @@
 - [x] Add yaafrika.org and info@yaafrika.org to the footer.
 - [x] Restyle the four workflow items with clean oval forms.
 - [x] Add the supplied photos to the home page without changing its minimal character.
-- [ ] Verify desktop and mobile layouts and current diagnostics.
+- [x] Verify desktop and mobile layouts and current diagnostics.
