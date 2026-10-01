@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, MessagesSquare, Star, UsersRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import classroomPhoto from "@/assets/mentorship-classroom.jpg.asset.json";
-import studentsPhoto from "@/assets/student-friendship.jpg.asset.json";
 import youthPhoto from "@/assets/youth-group.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -76,20 +75,15 @@ function Home() {
               </Button>
             </div>
           </div>
-          <div className="relative h-[390px] md:h-[470px]">
+          <div className="h-[300px] overflow-hidden rounded-md sm:h-[390px] md:h-[470px]">
             <img
               src={classroomPhoto.url}
               alt="A mentor supporting a young student in class"
-              className="absolute bottom-0 right-0 h-[72%] w-[88%] rounded-md object-cover md:h-[74%] md:w-[82%]"
+              width="1920"
+              height="1280"
+              fetchPriority="high"
+              className="h-full w-full object-cover"
             />
-            <img
-              src={studentsPhoto.url}
-              alt="Two students smiling together"
-              className="absolute right-0 top-0 h-[24%] w-[52%] rounded-md border-4 border-card object-cover md:w-[48%]"
-            />
-            <div className="absolute left-0 top-[12%] z-10 flex min-h-32 w-40 items-end bg-primary p-5 text-primary-foreground md:w-44">
-              <p className="font-display text-lg font-semibold leading-snug">Guidance for the work that matters.</p>
-            </div>
           </div>
         </div>
       </section>
@@ -107,18 +101,18 @@ function Home() {
         </div>
 
         <p className="mt-14 text-sm font-semibold uppercase text-primary">How it works</p>
-        <div className="relative mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="relative mx-auto mt-8 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, index) => (
             <div
               key={step.title}
-              className="flex min-h-72 flex-col justify-center border border-border bg-card px-7 py-10 text-center shadow-sm odd:rounded-[48%_52%_46%_54%/54%_43%_57%_46%] even:rounded-[54%_46%_52%_48%/46%_56%_44%_54%] lg:even:translate-y-7"
+              className="flex min-h-64 flex-col justify-center border border-primary/15 bg-accent px-6 py-8 text-center odd:rounded-[48%_52%_46%_54%/54%_43%_57%_46%] even:rounded-[54%_46%_52%_48%/46%_56%_44%_54%] lg:even:translate-y-4"
             >
               <span className="mx-auto flex size-11 items-center justify-center rounded-full bg-accent text-primary">
                 <step.icon className="size-5" />
               </span>
               <p className="mt-4 text-xs font-semibold text-primary">0{index + 1}</p>
               <h3 className="mt-2 font-display text-base font-semibold">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/75">{step.body}</p>
             </div>
           ))}
         </div>
@@ -129,6 +123,10 @@ function Home() {
           <img
             src={youthPhoto.url}
             alt="Young African students gathered together"
+            width="1920"
+            height="1272"
+            loading="lazy"
+            decoding="async"
             className="aspect-[16/10] h-full w-full rounded-md object-cover"
           />
           <div className="max-w-lg md:pl-6">
