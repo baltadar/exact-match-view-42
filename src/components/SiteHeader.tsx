@@ -32,6 +32,9 @@ export function SiteHeader() {
           <img
             src={yaaLogo.url}
             alt="Youth Advocacy Africa"
+            width="1757"
+            height="687"
+            decoding="async"
             className="h-10 w-auto max-w-32 object-contain sm:max-w-40"
           />
           <span className="hidden border-l border-border pl-3 text-sm font-semibold sm:block">
@@ -105,7 +108,15 @@ export function SiteFooter() {
     <footer className="mt-20 border-t border-border bg-card">
       <div className="container-page grid gap-8 py-10 text-sm text-muted-foreground sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
-          <img src={yaaLogo.url} alt="Youth Advocacy Africa" className="mb-4 h-12 w-auto max-w-48 object-contain" />
+          <img
+            src={yaaLogo.url}
+            alt="Youth Advocacy Africa"
+            width="1757"
+            height="687"
+            loading="lazy"
+            decoding="async"
+            className="mb-4 h-12 w-auto max-w-48 object-contain"
+          />
           <p className="max-w-md leading-relaxed">
             YAA Mentorship connects young African advocates with experienced mentors for
             purposeful, accountable growth.
@@ -118,13 +129,13 @@ export function SiteFooter() {
             rel="noreferrer"
             className="font-medium text-foreground transition-colors hover:text-primary"
           >
-            yaafrika.org
+            Main Website
           </a>
           <a
             href="mailto:info@yaafrika.org"
             className="font-medium text-foreground transition-colors hover:text-primary"
           >
-            info@yaafrika.org
+            Contact Us
           </a>
         </div>
       </div>
