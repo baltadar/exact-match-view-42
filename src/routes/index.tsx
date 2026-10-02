@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, MessagesSquare, Star, UsersRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import classroomPhoto from "@/assets/mentorship-classroom.jpg.asset.json";
-import youthPhoto from "@/assets/youth-group.jpg.asset.json";
+
+const classroomPhoto = "/media/mentorship-classroom.jpg";
+const youthPhoto = "/media/youth-group.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -77,7 +78,7 @@ function Home() {
           </div>
           <div className="h-[300px] overflow-hidden rounded-md sm:h-[390px] md:h-[470px]">
             <img
-              src={classroomPhoto.url}
+              src={classroomPhoto}
               alt="A mentor supporting a young student in class"
               width="1920"
               height="1280"
@@ -121,7 +122,7 @@ function Home() {
       <section className="bg-secondary">
         <div className="container-page grid gap-8 py-14 md:grid-cols-[0.9fr_1.1fr] md:items-center md:py-16">
           <img
-            src={youthPhoto.url}
+            src={youthPhoto}
             alt="Young African students gathered together"
             width="1920"
             height="1272"

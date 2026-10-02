@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/UserAvatar";
-import yaaLogo from "@/assets/yaa-logo.png.asset.json";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+const yaaLogo = "/media/yaa-logo.png";
 
 export function SiteHeader() {
   const { user, profile } = useAuth();
@@ -30,7 +31,7 @@ export function SiteHeader() {
       <div className="container-page flex min-h-16 items-center justify-between gap-3 py-2">
         <Link to="/" aria-label="YAA Mentorship home" className="flex min-w-0 items-center gap-3">
           <img
-            src={yaaLogo.url}
+            src={yaaLogo}
             alt="Youth Advocacy Africa"
             width="1757"
             height="687"
@@ -109,7 +110,7 @@ export function SiteFooter() {
       <div className="container-page grid gap-8 py-10 text-sm text-muted-foreground sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
           <img
-            src={yaaLogo.url}
+            src={yaaLogo}
             alt="Youth Advocacy Africa"
             width="1757"
             height="687"

@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Serve fixed homepage brand media from `public/media`; this avoids intermittent CDN authorization failures for core visuals.
