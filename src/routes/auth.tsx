@@ -87,7 +87,16 @@ function AuthPage() {
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin,
     });
-    if (result.error) { toast.error("Google sign-in failed. Please try again."); return; }
+    if (result.error) {
+      const msg = result.error.message || "";
+      if (/cancel/i.test(msg)) return;
+      toast.error(
+        /popup/i.test(msg)
+          ? "Your browser blocked the Google sign-in window. Allow pop-ups for this site and try again."
+          : msg || "Google sign-in failed. Please try again.",
+      );
+      return;
+    }
     if (result.redirected) return;
     navigate({ to: "/mentorships" });
   }

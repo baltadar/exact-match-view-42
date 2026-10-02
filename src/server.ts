@@ -44,9 +44,24 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+// Sign-in broker paths (/~oauth/*) are normally handled by the hosting layer before
+// reaching the app. Some preview hosts forward them straight to the app, which would
+// render a 404 — hand those requests to the preview host that does handle them.
+function oauthBrokerFallback(request: Request): Response | null {
+  const url = new URL(request.url);
+  if (!url.pathname.startsWith("/~oauth/")) return null;
+  const previewHost = process.env["LOVABLE_PREVIEW_HOST"];
+  if (previewHost && url.host !== previewHost) {
+    return Response.redirect(`https://${previewHost}${url.pathname}${url.search}`, 302);
+  }
+  return null;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const oauthRedirect = oauthBrokerFallback(request);
+      if (oauthRedirect) return oauthRedirect;
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
