@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Serve fixed homepage brand media from `public/media`; this avoids intermittent CDN authorization failures for core visuals.
+- Requests to /~oauth/* that reach the app are redirected to the preview host in src/server.ts — some preview hosts forward the Google sign-in path to the app instead of handling it, which showed a 404.
