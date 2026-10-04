@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { oauthBrokerTarget } from "./lib/oauth-broker";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -45,16 +46,11 @@ function isH3SwallowedErrorBody(body: string): boolean {
 }
 
 // Sign-in broker paths (/~oauth/*) are normally handled by the hosting layer before
-// reaching the app. Some preview hosts forward them straight to the app, which would
-// render a 404 — hand those requests to the preview host that does handle them.
+// reaching the app. When a host forwards them to the app instead, send the visitor
+// straight to the sign-in service so they never see "Page not found".
 function oauthBrokerFallback(request: Request): Response | null {
-  const url = new URL(request.url);
-  if (!url.pathname.startsWith("/~oauth/")) return null;
-  const previewHost = process.env["LOVABLE_PREVIEW_HOST"];
-  if (previewHost && url.host !== previewHost) {
-    return Response.redirect(`https://${previewHost}${url.pathname}${url.search}`, 302);
-  }
-  return null;
+  const target = oauthBrokerTarget(request.url);
+  return target ? Response.redirect(target, 302) : null;
 }
 
 export default {

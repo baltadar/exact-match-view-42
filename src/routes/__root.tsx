@@ -18,6 +18,20 @@ import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
+  // Safety net: if a Google sign-in step ever lands here, forward it to the
+  // sign-in service instead of showing "Page not found".
+  const oauthTarget =
+    typeof window !== "undefined" ? oauthBrokerTarget(window.location.href) : null;
+  useEffect(() => {
+    if (oauthTarget) window.location.replace(oauthTarget);
+  }, [oauthTarget]);
+  if (oauthTarget) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
+        <p className="text-sm text-muted-foreground">Continuing to Google sign-in…</p>
+      </div>
+    );
+  }
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
