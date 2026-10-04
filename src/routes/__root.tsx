@@ -16,6 +16,7 @@ import { AuthProvider } from "@/lib/auth";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { oauthBrokerTarget } from "@/lib/oauth-broker";
 
 function NotFoundComponent() {
   // Safety net: if a Google sign-in step ever lands here, forward it to the
