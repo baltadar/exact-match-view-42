@@ -39,6 +39,15 @@ function AuthPage() {
   const [asMentee, setAsMentee] = useState(true);
   const [busy, setBusy] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
+  // Google sign-in only works on Lovable-hosted addresses; hide it elsewhere
+  // (e.g. the self-hosted workers.dev site), where it would fail.
+  const [googleAvailable, setGoogleAvailable] = useState(false);
+  useEffect(() => {
+    const h = window.location.hostname;
+    setGoogleAvailable(
+      h === "localhost" || h.endsWith(".lovable.app") || h.endsWith(".lovableproject.com"),
+    );
+  }, []);
 
   useEffect(() => {
     if (!loading && user) navigate({ to: "/mentorships", replace: true });
@@ -117,12 +126,16 @@ function AuthPage() {
         </div>
       ) : (
         <div className="mt-8 rounded-lg border border-border bg-card p-6">
-          <Button variant="outline" className="w-full" onClick={googleSignIn}>
-            Continue with Google
-          </Button>
-          <div className="my-6 flex items-center gap-3 text-xs uppercase tracking-wide text-muted-foreground">
-            <span className="h-px flex-1 bg-border" /> or <span className="h-px flex-1 bg-border" />
-          </div>
+          {googleAvailable && (
+            <>
+              <Button variant="outline" className="w-full" onClick={googleSignIn}>
+                Continue with Google
+              </Button>
+              <div className="my-6 flex items-center gap-3 text-xs uppercase tracking-wide text-muted-foreground">
+                <span className="h-px flex-1 bg-border" /> or <span className="h-px flex-1 bg-border" />
+              </div>
+            </>
+          )}
 
           <Tabs defaultValue="signin">
             <TabsList className="grid w-full grid-cols-2">
